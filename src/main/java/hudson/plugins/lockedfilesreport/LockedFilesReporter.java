@@ -75,7 +75,7 @@ public class LockedFilesReporter extends Recorder implements Serializable {
             List<FileUsageDetails> list = workspace.act(new GetUsedFiles(command, new StreamBuildListener(listener.getLogger())));
             if (list.size() > 0) {
                 build.getActions().add(new LockedFilesReportAction(build, list));
-                listener.error("Build was failed as the workspace contained files that were locked by another process. See File usage report for more information.");
+                listener.error("Build was failed as the workspace contained files that were locked by another process. See Locked files report for more information.");
                 build.setResult(Result.FAILURE);
             }
             
