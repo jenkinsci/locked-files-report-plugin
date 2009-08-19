@@ -82,10 +82,10 @@ public class LockedFilesReporter extends Recorder implements Serializable {
             return (list.size() == 0);          
         } catch (IOException e) {
           listener.error("There was an IOException while launching a process. Please report it to the Hudson user mailing list.");
-          listener.error(e.getMessage());
+          e.printStackTrace(listener.getLogger());
       } catch (InterruptedException e) {
           listener.error("There was an InterruptedException while running a process. Please report it to the Hudson user mailing list.");
-          listener.error(e.getMessage());
+          e.printStackTrace(listener.getLogger());
       }
       return false;
     }
@@ -111,7 +111,7 @@ public class LockedFilesReporter extends Recorder implements Serializable {
                 reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(commandOutput.toByteArray())));            
                 return command.parseOutput(result, reader, workspacePath);
             } catch (InterruptedException e) {
-                throw new AbortException(e.getMessage());
+                throw new IOException(e);
             } finally {
                 IOUtils.closeQuietly(commandOutput);
                 if (reader != null) {

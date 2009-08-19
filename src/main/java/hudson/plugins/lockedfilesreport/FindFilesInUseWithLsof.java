@@ -5,14 +5,16 @@ import hudson.util.ArgumentListBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FindFilesInUseWithLsof extends FindFilesInUseCommand {
+public class FindFilesInUseWithLsof extends FindFilesInUseCommand implements Serializable {
 
-    
+    private static final long serialVersionUID = 1L;
+
     @Override
     public ArgumentListBuilder getArguments(String workspacePath) {
         ArgumentListBuilder builder = new ArgumentListBuilder();

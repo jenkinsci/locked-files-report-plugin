@@ -5,13 +5,16 @@ import hudson.util.ArgumentListBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FindFilesInUseWithHandle extends FindFilesInUseCommand {
+public class FindFilesInUseWithHandle extends FindFilesInUseCommand implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     private static final Pattern HANDLE_PATTERN = Pattern.compile("(\\S+)\\s+pid: (\\d+)\\s+(\\S+)\\s+(\\S*):\\s+(.*)");
     private final String exec;
 
