@@ -16,7 +16,6 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 
-import hudson.AbortException;
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
@@ -25,6 +24,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
 import hudson.model.Result;
+import hudson.model.StreamBuildListener;
 import hudson.model.TopLevelItem;
 import hudson.plugins.lockedfilesreport.model.FileUsageDetails;
 import hudson.remoting.VirtualChannel;
@@ -72,7 +72,7 @@ public class LockedFilesReporter extends Recorder implements Serializable {
         try {
             listener.getLogger().println("Searching for locked files in workspace.");
             FilePath workspace = build.getBuiltOn().getWorkspaceFor((TopLevelItem) build.getProject());
-            List<FileUsageDetails> list = workspace.act(new GetUsedFiles(command, launcher));
+            List<FileUsageDetails> list = workspace.act(new GetUsedFiles(command, new StreamBuildListener(listener.getLogger())));
             if (list.size() > 0) {
                 build.getActions().add(new LockedFilesReportAction(build, list));
                 listener.error("Build was failed as the workspace contained files that were locked by another process. See File usage report for more information.");
@@ -94,20 +94,18 @@ public class LockedFilesReporter extends Recorder implements Serializable {
 
         private static final long serialVersionUID = 1L;
         private final FindFilesInUseCommand command;
-        private final Launcher launcher;
-        
-        public GetUsedFiles(FindFilesInUseCommand command, Launcher launcher) {
+        private final StreamBuildListener listener;
+        public GetUsedFiles(FindFilesInUseCommand command, StreamBuildListener listener) {
             this.command = command;
-            this.launcher = launcher;
+            this.listener = listener;
         }
 
         public List<FileUsageDetails> invoke(File f, VirtualChannel channel) throws IOException {
             String workspacePath = f.getCanonicalPath();
             ByteArrayOutputStream commandOutput = new ByteArrayOutputStream();
             BufferedReader reader = null;
-            
             try {
-                int result = launcher.launch().cmds(command.getArguments(workspacePath)).stdout(commandOutput).start().join();
+                int result = new Launcher.LocalLauncher(listener).launch().cmds(command.getArguments(workspacePath)).stdout(commandOutput).start().join();
                 reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(commandOutput.toByteArray())));            
                 return command.parseOutput(result, reader, workspacePath);
             } catch (InterruptedException e) {
