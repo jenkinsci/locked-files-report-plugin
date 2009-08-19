@@ -1,11 +1,15 @@
 package hudson.plugins.lockedfilesreport.model;
 
+import java.io.Serializable;
+
 import org.kohsuke.stapler.export.Exported;
 import org.kohsuke.stapler.export.ExportedBean;
 
 @ExportedBean(defaultVisibility=999)
-public class FileUsageDetails {
+public class FileUsageDetails implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     private final String filename;
     private final String processName;
     private final String processPid;
