@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+    
+  <groupId>org.jvnet.hudson.plugins</groupId>
+  <artifactId>locked-files-report</artifactId>
+  <packaging>hpi</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>Hudson Locked Files Report Plug-in</name>
+  <url>http://wiki.hudson-ci.org/display/HUDSON/Locked+Files+Report+Plugin</url>
+
+  <parent>
+    <groupId>org.jvnet.hudson.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>1.318</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  
+  <licenses>
+    <license>
+      <name>MIT license</name>
+      <comments>All source code is under the MIT license.</comments>
+    </license>
+  </licenses>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.jvnet.hudson.main</groupId>
+      <artifactId>hudson-test-harness</artifactId>
+      <version>1.318</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.6</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,7 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
+	xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
+	xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+    <t:summary icon="/plugin/locked-files-report/icons/emblem-readonly-48x48.png">
+		There were <a href="${it.urlName}/">${it.filesCount} locked</a> files.
+	</t:summary>
+</j:jelly>
