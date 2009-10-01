@@ -1,5 +1,6 @@
 package hudson.plugins.lockedfilesreport;
 
+import hudson.tasks.BuildStepMonitor;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -50,6 +51,10 @@ public class LockedFilesReporter extends Recorder implements Serializable {
     @Override
     public boolean prebuild(AbstractBuild<?, ?> build, BuildListener listener) {
         return checkForFileUsage(build, listener, build.getBuiltOn().createLauncher(listener));
+    }
+
+    public BuildStepMonitor getRequiredMonitorService() {
+        return BuildStepMonitor.BUILD;
     }
 
     @Override
