@@ -63,7 +63,7 @@ public class LockedFilesReporter extends Recorder implements Serializable {
     }
     
     private boolean checkForFileUsage(AbstractBuild<?, ?> build, BuildListener listener, Launcher launcher) {
-        if (build.getResult().isWorseOrEqualTo(Result.FAILURE) ||  build.getAction(LockedFilesReportAction.class) != null) {
+        if (((build.getResult() != null) && build.getResult().isWorseOrEqualTo(Result.FAILURE)) ||  (build.getAction(LockedFilesReportAction.class) != null)) {
             return true;
         }
         
