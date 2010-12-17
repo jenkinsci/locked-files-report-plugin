@@ -1,0 +1,10 @@
+Handle v3.42
+Copyright (C) 1997-2008 Mark Russinovich
+Sysinternals - www.sysinternals.com
+
+sh.exe             pid: 3836   ORG\username                C: C:\hudson\workspace\Hardware
+sh.exe             pid: 232    ORG\username                C: C:\hudson\workspace\Hardware
+git.exe            pid: 3512   ORG\username                C: C:\hudson\workspace\Hardware
+git.exe            pid: 3512   ORG\username              FB0: C:\hudson\workspace\Hardware\.git\objects\pack\pack-111.pack
+ssh.exe            pid: 872    ORG\username                C: C:\hudson\workspace\Hardware
+ssh.exe            pid: 872    ORG\username              FB0: C:\hudson\workspace\Hardware\.git\objects\pack\pack-111.pack

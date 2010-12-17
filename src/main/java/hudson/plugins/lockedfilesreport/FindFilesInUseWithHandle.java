@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 public class FindFilesInUseWithHandle extends FindFilesInUseCommand implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,7 +38,7 @@ public class FindFilesInUseWithHandle extends FindFilesInUseCommand implements S
             Matcher matcher = HANDLE_PATTERN.matcher(line);
             if (matcher.matches()) {
                 list.add(new FileUsageDetails(matcher.group(5), 
-                        matcher.group(5).substring(workspacePath.length() + 1), 
+                        StringUtils.removeStart(matcher.group(5).substring(workspacePath.length()), "\\"), 
                         matcher.group(2), 
                         matcher.group(1), 
                         matcher.group(3)));

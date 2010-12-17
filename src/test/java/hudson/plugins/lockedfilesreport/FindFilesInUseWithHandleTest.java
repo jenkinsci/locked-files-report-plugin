@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import org.junit.Test;
+import org.jvnet.hudson.test.Bug;
 
 public class FindFilesInUseWithHandleTest {
     
@@ -50,5 +51,14 @@ public class FindFilesInUseWithHandleTest {
                 new BufferedReader(new InputStreamReader(FindFilesInUseWithHandleTest.class.getResourceAsStream("handle-outofbounds.log"))),
                 "C:\\Projects\\hudson\\");
         assertThat(list.size(), is(122));
+    }
+    
+    @Bug(8323)
+    @Test public void assertParsingOfTextInIssue8323Works() throws Exception {
+        List<FileUsageDetails> list = new FindFilesInUseWithHandle("C:\\Projects\\hudson\\").parseOutput(
+                0, 
+                new BufferedReader(new InputStreamReader(FindFilesInUseWithHandleTest.class.getResourceAsStream("handle-issue-8323.log"))),
+                "C:\\hudson\\workspace\\Hardware");
+        assertThat(list.size(), is(6));    	
     }
 }
