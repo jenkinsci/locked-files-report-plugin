@@ -1,7 +1,0 @@
-
-Handle v3.42
-Copyright (C) 1997-2008 Mark Russinovich
-Sysinternals - www.sysinternals.com
-
-cmd.exe            pid: 10784  HIQ\erikra                  A4: C:\Projects\hudson\trunk\hudson\plugins\file-usage-report
-eclipse.exe        pid: 8368   HIQ\erikra                 74C: C:\Projects\hudson\eclipse-workspace\.metadata\.lock
