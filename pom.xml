@@ -35,7 +35,8 @@
    <connection>scm:git:git://github.com/hudson/locked-files-report-plugin.git</connection>
    <developerConnection>scm:git:git@github.com:hudson/locked-files-report-plugin.git</developerConnection>
   </scm>
-   <!-- the following part is needed only if your plugin build against 1.387 or earlier Hudson -->
+
+  <!-- the following part is needed only if your plugin build against 1.387 or earlier Hudson -->
   <build>
     <plugins>
       <plugin>
@@ -46,7 +47,13 @@
       </plugin>
     </plugins>
   </build>
-  
+
+  <distributionManagement>
+    <repository>
+      <id>java.net-m2-repository</id>
+      <url>http://maven.hudson-labs.org:8081/content/repositories/releases/</url>
+    </repository>
+  </distributionManagement>  
   
   <dependencies>
     <dependency>
