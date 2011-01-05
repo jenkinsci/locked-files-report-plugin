@@ -39,4 +39,13 @@ public class FindFilesInUseWithLsofTest {
                 "C:\\Projects\\hudson\\");
         assertThat(list.size(), is(0));
     }
+    
+    @Test public void assertParsingWhenWorkspaceFolderIsLocked() throws IOException {
+        List<FileUsageDetails> list = new FindFilesInUseWithLsof().parseOutput(
+                0, 
+                new BufferedReader(new InputStreamReader(FindFilesInUseCommand.class.getResourceAsStream("lsof-issue-8323.log"))),
+                "/tmp");
+        assertThat(list.size(), is(2));
+        assertThat(list.get(1).getFileName(), is("/tmp/"));
+    }
 }

@@ -60,5 +60,6 @@ public class FindFilesInUseWithHandleTest {
                 new BufferedReader(new InputStreamReader(FindFilesInUseWithHandleTest.class.getResourceAsStream("handle-issue-8323.log"))),
                 "C:\\hudson\\workspace\\Hardware");
         assertThat(list.size(), is(6));    	
+        assertThat(list.get(0).getFileName(), is("C:\\hudson\\workspace\\Hardware"));
     }
 }
