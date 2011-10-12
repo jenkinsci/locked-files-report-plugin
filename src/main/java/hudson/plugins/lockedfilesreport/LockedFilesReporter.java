@@ -76,7 +76,7 @@ public class LockedFilesReporter extends Recorder implements Serializable {
 
         try {
             listener.getLogger().println("Searching for locked files in workspace.");
-            FilePath workspace = build.getBuiltOn().getWorkspaceFor((TopLevelItem) build.getProject());
+            FilePath workspace = build.getWorkspace();
             List<FileUsageDetails> list = workspace.act(new GetUsedFiles(command, new StreamBuildListener(listener.getLogger())));
             if (list.size() > 0) {
                 build.getActions().add(new LockedFilesReportAction(build, list));
