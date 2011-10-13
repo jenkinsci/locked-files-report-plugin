@@ -39,6 +39,14 @@ public class FindFilesInUseWithLsofTest {
                 "/tmpasdaa");
         assertThat(list.size(), is(0));
     }
+
+    @Test public void assertParsingOfEmptyOutput() throws IOException {
+        List<FileUsageDetails> list = new FindFilesInUseWithLsof().parseOutput(
+                1, 
+                new BufferedReader(new InputStreamReader(FindFilesInUseCommand.class.getResourceAsStream("lsof-empty-output.log"))),
+                "/tmpasdaa");
+        assertThat(list.size(), is(0));
+    }
     
     @Test public void assertParsingWhenWorkspaceFolderIsLocked() throws IOException {
         List<FileUsageDetails> list = new FindFilesInUseWithLsof().parseOutput(
