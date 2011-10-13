@@ -36,7 +36,7 @@ public class FindFilesInUseWithLsofTest {
         List<FileUsageDetails> list = new FindFilesInUseWithLsof().parseOutput(
                 1, 
                 new BufferedReader(new InputStreamReader(FindFilesInUseCommand.class.getResourceAsStream("lsof-no-match.log"))),
-                "C:\\Projects\\hudson\\");
+                "/tmpasdaa");
         assertThat(list.size(), is(0));
     }
     
