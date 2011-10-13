@@ -17,6 +17,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 
+import hudson.AbortException;
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
@@ -114,7 +115,7 @@ public class LockedFilesReporter extends Recorder implements Serializable {
                 reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(commandOutput.toByteArray())));            
                 return command.parseOutput(result, reader, workspacePath);
             } catch (InterruptedException e) {
-                throw new IOException(e);
+                throw new AbortException("Locked files search was interrupted.");
             } finally {
                 IOUtils.closeQuietly(commandOutput);
                 if (reader != null) {
