@@ -27,9 +27,6 @@ public class FindFilesInUseWithLsof extends FindFilesInUseCommand implements Ser
     @Override
     public List<FileUsageDetails> parseOutput(int result, BufferedReader reader, String workspacePath) throws IOException {
         List<FileUsageDetails> list = new ArrayList<FileUsageDetails>();
-        if (result == 1) {
-            return list;
-        }
         Pattern HANDLE_PATTERN = Pattern.compile("(\\S+)\\s+(\\S+)\\s+(\\S+)\\s+(\\S+)\\s+(\\S+)\\s+(\\S+)\\s+(\\S+)\\s+(\\S+)\\s+" + workspacePath + "(\\S+)");
         String line = reader.readLine();
         line = reader.readLine();
