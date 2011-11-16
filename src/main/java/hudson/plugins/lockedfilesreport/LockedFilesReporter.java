@@ -8,7 +8,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.nio.charset.Charset;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import net.sf.json.JSONObject;
 
@@ -22,6 +24,7 @@ import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
 import hudson.FilePath.FileCallable;
+import hudson.Proc;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
@@ -78,7 +81,10 @@ public class LockedFilesReporter extends Recorder implements Serializable {
         try {
             listener.getLogger().println("Searching for locked files in workspace.");
             FilePath workspace = build.getWorkspace();
-            List<FileUsageDetails> list = workspace.act(new GetUsedFiles(command, new StreamBuildListener(listener.getLogger())));
+            List<FileUsageDetails> list = workspace.act(
+                    new GetUsedFiles(command, 
+                            new StreamBuildListener(listener.getLogger(), Charset.defaultCharset()), 
+                            getDescriptor().getDefaultToolTimeout()));
             if (list.size() > 0) {
                 build.getActions().add(new LockedFilesReportAction(build, list));
                 listener.error("Build was failed as the workspace contained files that were locked by another process. See Locked files report for more information.");
@@ -101,9 +107,11 @@ public class LockedFilesReporter extends Recorder implements Serializable {
         private static final long serialVersionUID = 1L;
         private final FindFilesInUseCommand command;
         private final StreamBuildListener listener;
-        public GetUsedFiles(FindFilesInUseCommand command, StreamBuildListener listener) {
+        private final int defaultToolTimeout;
+        public GetUsedFiles(FindFilesInUseCommand command, StreamBuildListener listener, int defaultToolTimeout) {
             this.command = command;
             this.listener = listener;
+            this.defaultToolTimeout = defaultToolTimeout;
         }
 
         public List<FileUsageDetails> invoke(File f, VirtualChannel channel) throws IOException {
@@ -111,8 +119,14 @@ public class LockedFilesReporter extends Recorder implements Serializable {
             ByteArrayOutputStream commandOutput = new ByteArrayOutputStream();
             BufferedReader reader = null;
             try {
-                int result = new Launcher.LocalLauncher(listener).launch().cmds(command.getArguments(workspacePath)).
-                        stdout(new ForkOutputStream(commandOutput, listener.getLogger())).start().join();
+                int result;
+                Proc proc = new Launcher.LocalLauncher(listener).launch().cmds(command.getArguments(workspacePath)).
+                        stdout(new ForkOutputStream(commandOutput, listener.getLogger())).start();
+                if (defaultToolTimeout == 0) {
+                    result = proc.join();
+                } else {
+                    result = proc.joinWithTimeout(defaultToolTimeout * 60, TimeUnit.SECONDS, listener);
+                }
                 reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(commandOutput.toByteArray())));            
                 return command.parseOutput(result, reader, workspacePath);
             } catch (InterruptedException e) {
@@ -129,10 +143,12 @@ public class LockedFilesReporter extends Recorder implements Serializable {
     @Extension
     public static class DescriptorImpl extends BuildStepDescriptor<Publisher> {
 
-        private String handleExecutable;        
+        private String handleExecutable;
+        private int defaultToolTimeout;
         public DescriptorImpl() {
             super(LockedFilesReporter.class);
             handleExecutable = "handle.exe";
+            defaultToolTimeout = 10;
             load();
         }
 
@@ -163,6 +179,14 @@ public class LockedFilesReporter extends Recorder implements Serializable {
 
         public void setHandleExecutable(String handleExecutable) {
             this.handleExecutable = handleExecutable;
+        }
+
+        public int getDefaultToolTimeout() {
+            return defaultToolTimeout;
+        }
+
+        public void setDefaultToolTimeout(int defaultToolTimeout) {
+            this.defaultToolTimeout = defaultToolTimeout;
         }
     }
 }

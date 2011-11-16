@@ -1,7 +1,12 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  <f:section title="Locked files report" help="/plugin/googleanalytics/profileid.html">
-    <f:entry title="Handle executable" field="handleExecutable">
+  <f:section title="Locked files report">
+    <f:entry title="Handle executable" field="handleExecutable" help="/plugin/locked-files-report/help-handleExecutable.html">
         <f:textbox default="handle.exe"/>
     </f:entry>
+    <f:advanced>
+        <f:entry title="Default tool timeout in minutes" field="defaultToolTimeout" help="/plugin/locked-files-report/help-defaultToolTimeout.html">
+            <f:textbox default="10"/>
+        </f:entry>
+    </f:advanced>
   </f:section>
 </j:jelly>

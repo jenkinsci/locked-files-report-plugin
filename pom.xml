@@ -11,7 +11,7 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>1.319</version>
+    <version>1.363</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   
@@ -77,12 +77,6 @@
   </distributionManagement>  
   
   <dependencies>
-    <dependency>
-      <groupId>org.jvnet.hudson.main</groupId>
-      <artifactId>hudson-test-harness</artifactId>
-      <version>1.318</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

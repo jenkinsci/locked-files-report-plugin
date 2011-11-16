@@ -1,0 +1,9 @@
+<div>
+  <p>
+    There has been reports with the Windows handle tool that it does not timeout due to an unknown issue. To make sure that the
+    build continues even if the tool locks up it is possible to set a timeout. The timeout is specified in minutes and should be
+    long enough to let the tool finish normally. Default value is 10 minutes, and 0 minutes means that the tool will not timeout and may
+    hang the build. This was introduced to fix the <a href="https://issues.jenkins-ci.org/browse/JENKINS-4797">JENKINS-4797</a> issue
+    and has only occurred on Windows.
+    </p>
+</div>
