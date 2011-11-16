@@ -32,8 +32,9 @@
   </developers>
   
   <scm>
-   <connection>scm:git:git://github.com/hudson/locked-files-report-plugin.git</connection>
-   <developerConnection>scm:git:git@github.com:hudson/locked-files-report-plugin.git</developerConnection>
+   <connection>scm:git:git://github.com/jenkinsci/locked-files-report-plugin.git</connection>
+   <developerConnection>scm:git:git@github.com:jenkinsci/locked-files-report-plugin.git</developerConnection>
+   <url>https://github.com/jenkinsci/locked-files-report-plugin</url>
   </scm>
 
   <!-- the following part is needed only if your plugin build against 1.387 or earlier Hudson -->
@@ -71,8 +72,8 @@
 
   <distributionManagement>
     <repository>
-      <id>java.net-m2-repository</id>
-      <url>http://maven.hudson-labs.org:8081/content/repositories/releases/</url>
+      <id>maven.jenkins-ci.org</id>
+      <url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
     </repository>
   </distributionManagement>  
   
