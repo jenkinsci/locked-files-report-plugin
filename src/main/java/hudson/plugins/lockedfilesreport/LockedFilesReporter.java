@@ -27,8 +27,8 @@ import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
 import hudson.model.Result;
 import hudson.model.StreamBuildListener;
-import hudson.model.TopLevelItem;
 import hudson.plugins.lockedfilesreport.model.FileUsageDetails;
+import hudson.util.ForkOutputStream;
 import hudson.remoting.VirtualChannel;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
@@ -111,7 +111,8 @@ public class LockedFilesReporter extends Recorder implements Serializable {
             ByteArrayOutputStream commandOutput = new ByteArrayOutputStream();
             BufferedReader reader = null;
             try {
-                int result = new Launcher.LocalLauncher(listener).launch().cmds(command.getArguments(workspacePath)).stdout(commandOutput).start().join();
+                int result = new Launcher.LocalLauncher(listener).launch().cmds(command.getArguments(workspacePath)).
+                        stdout(new ForkOutputStream(commandOutput, listener.getLogger())).start().join();
                 reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(commandOutput.toByteArray())));            
                 return command.parseOutput(result, reader, workspacePath);
             } catch (InterruptedException e) {
