@@ -1,0 +1,7 @@
+
+Handle v3.46
+Copyright (C) 1997-2011 Mark Russinovich
+Sysinternals - www.sysinternals.com
+
+explorer.exe       pid: 2848   type: File          HQ\tester         4CC: C:\jenkins\workspace\batchtest\otherdir
+notepad.exe        pid: 4024   type: File          HQ\tester           C: C:\jenkins\workspace\batchtest\somefile

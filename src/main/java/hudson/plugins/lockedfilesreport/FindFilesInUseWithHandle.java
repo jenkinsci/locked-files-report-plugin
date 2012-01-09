@@ -17,7 +17,7 @@ public class FindFilesInUseWithHandle extends FindFilesInUseCommand implements S
 
     private static final long serialVersionUID = 1L;
     
-    private static final Pattern HANDLE_PATTERN = Pattern.compile("(\\S+)\\s+pid: (\\d+)\\s+(\\S+)\\s+(\\S*):\\s+(.*)");
+    private static final Pattern HANDLE_PATTERN = Pattern.compile("(\\S+)\\s+pid: (\\d+)\\s+(type: \\S+)?\\s*(\\S+)\\s+(\\S*):\\s+(.*)");
     private final String exec;
 
     public FindFilesInUseWithHandle(String exec) {
@@ -37,11 +37,11 @@ public class FindFilesInUseWithHandle extends FindFilesInUseCommand implements S
         while (line != null) {
             Matcher matcher = HANDLE_PATTERN.matcher(line);
             if (matcher.matches()) {
-                list.add(new FileUsageDetails(matcher.group(5), 
-                        StringUtils.removeStart(matcher.group(5).substring(workspacePath.length()), "\\"), 
+                list.add(new FileUsageDetails(matcher.group(6), 
+                        StringUtils.removeStart(matcher.group(6).substring(workspacePath.length()), "\\"), 
                         matcher.group(2), 
                         matcher.group(1), 
-                        matcher.group(3)));
+                        matcher.group(4)));
             }
             line = reader.readLine();
         }
@@ -52,6 +52,7 @@ public class FindFilesInUseWithHandle extends FindFilesInUseCommand implements S
     public ArgumentListBuilder getArguments(String workspacePath) {
         ArgumentListBuilder builder = new ArgumentListBuilder();
         builder.add(exec);
+	builder.add("-accepteula");
         builder.add("-u");
         builder.add(workspacePath.replace("/", "\\"));
         return builder;
