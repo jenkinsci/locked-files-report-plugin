@@ -17,7 +17,7 @@ import org.jvnet.hudson.test.Bug;
 public class FindFilesInUseWithHandleTest {
     
     @Test public void assertArgumentsContainFilePath() {
-        assertThat( new FindFilesInUseWithHandle().getArguments("c:/temp/folder").toCommandArray(), is(new String[]{"handle.exe", "-u", "c:\\temp\\folder"}));
+        assertThat( new FindFilesInUseWithHandle().getArguments("c:/temp/folder").toCommandArray(), is(new String[]{"handle.exe", "-accepteula", "-u", "c:\\temp\\folder"}));
     }
     
     @Test public void assertParsingOfTwoEntriesWorks() throws IOException {
@@ -36,7 +36,25 @@ public class FindFilesInUseWithHandleTest {
         assertThat(list.get(1).getProcessPid(), is("8368"));
         assertThat(list.get(1).getProcessOwner(), is("HIQ\\erikra"));
     }
-    
+   
+    @Test public void assertParsingOfNewFormat() throws IOException {
+        List<FileUsageDetails> list = new FindFilesInUseWithHandle().parseOutput(
+                0, 
+                new BufferedReader(new InputStreamReader(FindFilesInUseWithHandleTest.class.getResourceAsStream("handle-new-format.log"))),
+                "C:\\jenkins\\workspace\\batchtest");
+        assertThat(list.size(), is (2));
+        assertThat(list.get(0).getFileName(), is("C:\\jenkins\\workspace\\batchtest\\otherdir"));
+        assertThat(list.get(0).getFileNameRelativeToWorkspace(), is("otherdir"));
+        assertThat(list.get(0).getProcessName(), is("explorer.exe"));
+        assertThat(list.get(0).getProcessPid(), is("2848"));
+        assertThat(list.get(0).getProcessOwner(), is("HQ\\tester"));
+        assertThat(list.get(1).getFileName(), is("C:\\jenkins\\workspace\\batchtest\\somefile"));
+        assertThat(list.get(1).getProcessName(), is("notepad.exe"));
+        assertThat(list.get(1).getProcessPid(), is("4024"));
+        assertThat(list.get(1).getProcessOwner(), is("HQ\\tester"));
+    }
+
+ 
     @Test public void assertParsingOfNoFoundEntriesWorks() throws IOException {
         List<FileUsageDetails> list = new FindFilesInUseWithHandle().parseOutput(
                 1, 
