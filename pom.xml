@@ -4,7 +4,7 @@
   <groupId>org.jvnet.hudson.plugins</groupId>
   <artifactId>locked-files-report</artifactId>
   <packaging>hpi</packaging>
-  <version>1.6-SNAPSHOT</version>
+  <version>1.6</version>
   <name>Hudson Locked Files Report Plug-in</name>
   <url>http://wiki.hudson-ci.org/display/HUDSON/Locked+Files+Report+Plugin</url>
 
