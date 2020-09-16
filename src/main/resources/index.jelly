@@ -1,3 +1,4 @@
+<?jelly escape-by-default='true'?>
 <div>
   This plugin can be used for debugging when Hudson can not remove a workspace or update files because
   some process is locking a file in the workspace. The plugin will check at start and end of a build

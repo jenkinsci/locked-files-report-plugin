@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-    
-  <groupId>org.jvnet.hudson.plugins</groupId>
+
+  <groupId>org.jenkins-ci.plugins</groupId>
   <artifactId>locked-files-report</artifactId>
   <packaging>hpi</packaging>
   <version>1.7-SNAPSHOT</version>
@@ -9,12 +9,11 @@
   <url>http://wiki.hudson-ci.org/display/HUDSON/Locked+Files+Report+Plugin</url>
 
   <parent>
-    <groupId>org.jvnet.hudson.plugins</groupId>
+    <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>1.363</version>
-    <relativePath>../pom.xml</relativePath>
+    <version>2.32</version>
   </parent>
-  
+
   <licenses>
     <license>
       <name>MIT license</name>
@@ -30,75 +29,54 @@
       <timezone>+1</timezone>
     </developer>
   </developers>
-  
+
   <scm>
-   <connection>scm:git:git://github.com/jenkinsci/locked-files-report-plugin.git</connection>
-   <developerConnection>scm:git:git@github.com:jenkinsci/locked-files-report-plugin.git</developerConnection>
-   <url>https://github.com/jenkinsci/locked-files-report-plugin</url>
+    <connection>scm:git:git://github.com/jenkinsci/locked-files-report-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:jenkinsci/locked-files-report-plugin.git</developerConnection>
+    <url>https://github.com/jenkinsci/locked-files-report-plugin</url>
   </scm>
 
-  <!-- the following part is needed only if your plugin build against 1.387 or earlier Hudson -->
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-release-plugin</artifactId>
+        <groupId>org.jenkins-ci.tools</groupId>
+        <artifactId>maven-hpi-plugin</artifactId>
+        <extensions>true</extensions>
         <configuration>
-          <goals>deploy</goals>
+          <compatibleSinceVersion>2.0.0</compatibleSinceVersion>
         </configuration>
-      </plugin>
-      <plugin>
-	<groupId>org.codehaus.mojo</groupId>
-	<artifactId>animal-sniffer-maven-plugin</artifactId>
-	<version>1.7</version>
-	<configuration>
-	  <signature>
-	    <groupId>org.codehaus.mojo.signature</groupId>
-	    <artifactId>java15</artifactId>
-	    <version>1.0</version>
-	  </signature>
-	</configuration>
-	<executions>
-	  <execution>
-	    <id>java.1.5.check</id>
-	    <phase>verify</phase>
-	    <goals>
-	      <goal>check</goal>
-	    </goals>
-	  </execution>
-	</executions>
       </plugin>
     </plugins>
   </build>
 
-  <distributionManagement>
-    <repository>
-      <id>maven.jenkins-ci.org</id>
-      <url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
-    </repository>
-  </distributionManagement>  
-  
   <dependencies>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>matrix-project</artifactId>
+      <version>1.7.1</version>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.6</version>
+      <version>4.12</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
-    <repositories>
-        <repository>
-            <id>repo.jenkins-ci.org</id>
-            <url>http://repo.jenkins-ci.org/public/</url>
-        </repository>
-    </repositories>
+  <repositories>
+    <repository>
+      <id>repo.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </repository>
+  </repositories>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>repo.jenkins-ci.org</id>
-            <url>http://repo.jenkins-ci.org/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
-</project>  
+  <pluginRepositories>
+    <pluginRepository>
+      <id>repo.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </pluginRepository>
+  </pluginRepositories>
+</project>
   
 
