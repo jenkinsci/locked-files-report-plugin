@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.io.IOUtils;
+import org.jenkinsci.remoting.RoleChecker;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
@@ -137,7 +138,12 @@ public class LockedFilesReporter extends Recorder implements Serializable {
                     IOUtils.closeQuietly(reader);
                 }
             }
-        }        
+        }
+
+        @Override
+        public void checkRoles(RoleChecker roleChecker) throws SecurityException {
+            // Do nothing
+        }
     }
 
     @Extension
